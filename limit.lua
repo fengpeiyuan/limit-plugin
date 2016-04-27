@@ -43,15 +43,19 @@ function _M.fire(self,api_id,limit_number,limit_content)
         local delay, err = lim:incoming(key, true)
         if not delay then
         	if err == "rejected" then
-			local result={}
-			result['status']=200
-			result['info']="limited"
-			result['data']=content
-			ngx.say(cjson.encode(result))
-               		return ngx.exit(200)
+			if not content and tostring(content)~="" then
+				local result={}
+				result['status']=200
+				result['info']="limited"
+				result['data']=content
+				ngx.say(cjson.encode(result))
+				return ngx.exit(200)
+			else
+				return ngx.exit(503)
+			end
                 end
                 ngx.log(ngx.ERR, "failed to limit req: ", err)
-                return ngx.exit(500)
+                --return ngx.exit(500)
         end
         if delay > 0 then
         	ngx.sleep(delay)
