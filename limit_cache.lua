@@ -22,14 +22,18 @@ function _M.get(self,key)
 		ngx.log(ngx.ERR,"fetch from redis::number:"..tostring(number)..",type:"..type(number)..",content:"..tostring(content)..",type:"..type(content))
 		if type(number)~="string" or type(content)~="string" then
 			ngx.log(ngx.ERR,"Get number and content from redis return nil")
+			lru:set(tostring(key),"nil:nil",10)
 			return nil,nil
 		end
 		local value=number..":"..content
-		lru:set(tostring(key),value, 60)
+		lru:set(tostring(key),value, 10)
 	else
 		local from, to, err = ngx.re.find(number_content, ":", "jo")	
 		number=string.sub(number_content,1,from-1)
 		content=string.sub(number_content,from+1,string.len(number_content))
+		if "nil"==tostring(number) and "nil"==tostring(content) then
+			return nil,nil
+		end
 		--ngx.log(ngx.ERR,"fetch from lrucache:number:"..tostring(number)..",type:"..type(number)..",content:"..tostring(content)..",type:"..type(content))
 	end
 	

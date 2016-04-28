@@ -26,7 +26,7 @@ function _M.fire(self,api_id,limit_number,limit_content)
               	--ngx.log(ngx.ERR,"number:"..tostring(number)..",type:"..type(number)..",content:"..tostring(content))
 	end
 	if not number or type(number)~="string" then
-              	ngx.log(ngx.ERR,"value of number must not nil, now:"..tostring(number))
+              	--ngx.log(ngx.ERR,"value of number must not nil, now:"..tostring(number))
 		return
 	end
 	if not tonumber(number) or tonumber(number)<=0 then
