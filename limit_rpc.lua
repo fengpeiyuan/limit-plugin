@@ -13,6 +13,9 @@ function _M.init(self,ip,port)
 	return 
 end
 
+------------------------------------
+-- redis command hget
+------------------------------------
 function _M.hget(self,key,field)
 	local red = redis:new()
         red:set_timeout(1000)

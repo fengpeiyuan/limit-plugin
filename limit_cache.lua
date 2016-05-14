@@ -11,7 +11,11 @@ if not lru then
     return error("failed to create the cache: " .. (err or "unknown"))
 end
 
-
+--------------------------------------------------------------------------------
+-- get from lrucache, if not exists, get from redis and then fill lrucache with expire time
+-- notice, if redis does not have, fill default null with expire time in case of access redis too offen
+-- key number:content
+---------------------------------------------------------------------------------
 function _M.get(self,key)
 	local number_content=lru:get(tostring(key))
 	local number
