@@ -59,11 +59,7 @@ function _M.fire(self,api_id,limit_number,limit_content)
                 --return
 		if content and tostring(content)~="" then
 			if err == "rejected" then
-				local result={}
-				result['status']=200
-				result['info']="limited"
-				result['data']=content
-				ngx.say(cjson.encode(result))
+				ngx.say(tostring(content))
 				return ngx.exit(200)
 			end
 		else
